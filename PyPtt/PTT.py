@@ -321,7 +321,6 @@ class API:
         current_msg = ' '.join(msg)
         log.log(self.config, log.level.OUTSIDE, current_msg)
 
-
     def get_time(self) -> str:
         self._one_thread()
         if not self._login_status:
@@ -1974,6 +1973,48 @@ class API:
             sign_file
     ):
         _api_post.fast_post_step1(self, sign_file)
+
+    def register(
+            self,
+            new_ptt_id: str,
+            new_ptt_pw: str,
+            are_you_18: bool,
+            mood_on_demand: bool = False,
+            nick_name: str = '無名氏',
+            real_name: str = '無名氏',
+            service: str = '批踢踢',
+            address: str = '新竹縣子虛鄉烏有村543號'
+    ):
+
+        self._one_thread()
+
+        self.config.log_last_value = None
+
+        check_value.check(self.config, str, 'new_ptt_id', new_ptt_id)
+        check_value.check(self.config, str, 'new_ptt_pw', new_ptt_pw)
+        check_value.check(self.config, bool, 'are_you_18', are_you_18)
+        check_value.check(self.config, bool, 'mood_on_demand', mood_on_demand)
+        check_value.check(self.config, str, 'nick_name', nick_name)
+        check_value.check(self.config, str, 'real_name', real_name)
+        check_value.check(self.config, str, 'service', service)
+        check_value.check(self.config, str, 'address', address)
+
+        try:
+            from . import _api_register
+        except ModuleNotFoundError:
+            import _api_register
+
+        return _api_register.register(
+            self,
+            new_ptt_id,
+            new_ptt_pw,
+            are_you_18,
+            mood_on_demand,
+            nick_name,
+            real_name,
+            service,
+            address
+        )
 
 
 if __name__ == '__main__':

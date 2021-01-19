@@ -26,7 +26,6 @@ except ModuleNotFoundError:
     import exceptions
     import version
 
-
 websockets.http.USER_AGENT += f' PyPtt/{version.V}'
 
 
@@ -157,6 +156,7 @@ class API(object):
             ],
             screens.Target.UseTooManyResources,
             exceptions_=exceptions.UseTooManyResources())
+        self._connect_success = False
 
         log.show_value(
             self.config, log.level.INFO, [
@@ -225,7 +225,7 @@ class API(object):
                 i18n.ConnectMode,
                 i18n.ConnectMode_Unknown)
 
-        connect_success = False
+        self._connect_success = False
 
         for _ in range(2):
 
@@ -253,7 +253,7 @@ class API(object):
                             websocket_host,
                             origin=websocket_origin))
 
-                connect_success = True
+                self._connect_success = True
             except Exception as e:
                 traceback.print_tb(e.__traceback__)
                 print(e)
@@ -276,7 +276,7 @@ class API(object):
 
             break
 
-        if not connect_success:
+        if not self._connect_success:
             raise exceptions.ConnectError(self.config)
 
     def fast_send(
@@ -407,13 +407,18 @@ class API(object):
                 return -1
         # raise exceptions.NoMatchTargetError(self._RDQ)
         return -1
+
     def send(
+
             self,
             msg: str,
             target_list: list,
             screen_timeout: int = 0,
             refresh: bool = True,
             secret: bool = False) -> int:
+
+        if not self._connect_success:
+            self.connect()
 
         def clean_screen(recv_screen: str, NoColor: bool = True) -> str:
 

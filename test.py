@@ -96,9 +96,9 @@ def performance_test():
 
     ptt_bot.logout()
 
-
     print('Performance Test finish')
     sys.exit()
+
 
 #             for _ in range(1000):
 #             ptt_time = ptt_bot.fast_get_time()
@@ -1453,14 +1453,32 @@ def change_pw():
     ptt_bot.change_pw(password)
 
 
+def ptt_app():
+    ptt_bot = PTT.API(
+        log_level=PTT.log.level.TRACE,
+        connect_mode=PTT.connect_core.connect_mode.TELNET,
+        host='localhost',
+        port=8888
+    )
+
+    ptt_bot.register(
+        'SYSOP',
+        'zxcv1234',
+        are_you_18=True
+    )
+
+
 if __name__ == '__main__':
     print('Welcome to PyPtt v ' + PTT.version.V + ' test case')
+
+    ptt_app()
+    sys.exit()
 
     try:
         # init()
         # threading_test()
         ptt_bot = PTT.API(
-            # log_level=PTT.log.level.TRACE,
+            log_level=PTT.log.level.TRACE,
             # log_level=PTT.log.level.DEBUG,
             # host=PTT.data_type.host_type.PTT2
 
@@ -1470,9 +1488,9 @@ if __name__ == '__main__':
             # port=8888,
 
             # for 自定義 url 測試
-            # connect_mode=PTT.connect_core.connect_mode.TELNET,
-            # host='localhost',
-            # port=8888,
+            connect_mode=PTT.connect_core.connect_mode.TELNET,
+            host='localhost',
+            port=8888,
 
             # language=PTT.i18n.language.ENGLISH
         )
