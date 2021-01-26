@@ -21,8 +21,8 @@ def register(
         nick_name: str,
         real_name: str,
         service: str,
-        address: str
-) -> None:
+        address: str) -> None:
+
     cmd_list = list()
     cmd_list.append('new')
     cmd_list.append(command.Enter)
@@ -39,6 +39,12 @@ def register(
             '請輸入使用者代號',
             response=new_ptt_id + command.Enter,
             max_match=1
+        ),
+        #
+        connect_core.TargetUnit(
+            '此代號已經有人使用',
+            '此代號已經有人使用',
+            exceptions_=exceptions.IDExist()
         ),
         connect_core.TargetUnit(
             '設定密碼',
@@ -87,7 +93,21 @@ def register(
             '任意鍵',
             response=command.Space,
         ),
+        connect_core.TargetUnit(
+            '不使用 E-Mail 來認證',
+            '是否要使用 E-Mail 來認證',
+            # default enter
+            response=command.Enter,
+        ),
+        connect_core.TargetUnit(
+            '不使用 E-Mail 來認證',
+            '您確定要填寫註冊單嗎',
+            # default enter
+            response=command.Enter,
+        ),
 
+        #
+        #
         # connect_core.TargetUnit(
         #     [
         #         i18n.bucket,

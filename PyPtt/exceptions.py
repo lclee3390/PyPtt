@@ -173,8 +173,12 @@ class UseTooManyResources(Exception):
 
 
 class HostNotSupport(Exception):
-    def __init__(self, api):
-        self.message = f'{i18n.PTT2NotSupport}: {api}'
+    def __init__(self, api, func):
+
+        if api.config.host == data_type.host_type.PTT1:
+            self.message = f'{i18n.PTT1NotSupport}: {func}'
+        elif api.config.host == data_type.host_type.PTT2:
+            self.message = f'{i18n.PTT2NotSupport}: {func}'
 
     def __str__(self):
         return self.message
@@ -293,6 +297,14 @@ class DeletedPost(Exception):
             i18n.DeletedPost,
             board,
             aid)
+
+    def __str__(self):
+        return self.message
+
+
+class IDExist(Exception):
+    def __init__(self):
+        self.message = i18n.IDExist
 
     def __str__(self):
         return self.message

@@ -1988,6 +1988,9 @@ class API:
 
         self._one_thread()
 
+        if isinstance(self.config.host, str):
+            raise exceptions.HostNotSupport(self, lib_util.get_current_func_name())
+
         self.config.log_last_value = None
 
         check_value.check(self.config, str, 'new_ptt_id', new_ptt_id)

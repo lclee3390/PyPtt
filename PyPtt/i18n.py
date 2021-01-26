@@ -144,6 +144,7 @@ MultiThreadOperate = None
 HasNewMailGotoMainMenu = None
 UseTooManyResources = None
 host = None
+PTT1NotSupport = None
 PTT2NotSupport = None
 AnimationPost = None
 RestoreConnection = None
@@ -194,6 +195,7 @@ CatchBottomPostSuccess = None
 ConfirmDelete = None
 DeleteSuccess = None
 DeletedPost = None
+IDExist = None
 
 
 def specific_load(input_language, lang_list):
@@ -981,6 +983,12 @@ def load(input_lang):
         'host',
     ])
 
+    global PTT1NotSupport
+    PTT1NotSupport = specific_load(input_lang, [
+        f'{PTT}不支援',
+        f'{PTT} Not Support',
+    ])
+
     global PTT2NotSupport
     PTT2NotSupport = specific_load(input_lang, [
         f'{PTT2}不支援',
@@ -1280,6 +1288,14 @@ def load(input_lang):
         '已刪除文章',
         'Deleted Post',
     ])
+
+    global IDExist
+    IDExist = specific_load(input_lang, [
+        '此代號已經有人使用',
+        'This ID is already in use',
+    ])
+
+
 
     # No changes have been made to any settings
 

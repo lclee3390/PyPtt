@@ -1461,11 +1461,14 @@ def ptt_app():
         port=8888
     )
 
-    ptt_bot.register(
-        'SYSOP',
-        'zxcv1234',
-        are_you_18=True
-    )
+    try:
+        ptt_bot.register(
+            'SYSOP',
+            'zxcv1234',
+            are_you_18=True
+        )
+    except PTT.exceptions.IDExist:
+        ptt_bot.log('SYSOP 已經註冊')
 
 
 if __name__ == '__main__':
