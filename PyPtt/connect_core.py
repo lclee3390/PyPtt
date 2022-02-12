@@ -7,6 +7,7 @@ import telnetlib
 import re
 import traceback
 import threading
+import ssl
 from uao import register_uao
 
 register_uao()
@@ -233,10 +234,14 @@ class API(object):
                         log.level.DEBUG,
                         'USER_AGENT',
                         websockets.http.USER_AGENT)
+                    
+                    ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+                    ssl_context.load_default_certs()
 
                     self._core = asyncio.get_event_loop().run_until_complete(
                         websockets.connect(
                             websocket_host,
+                            ssl=ssl_context,
                             origin=websocket_origin))
 
                 connect_success = True
