@@ -348,7 +348,7 @@ def parse_query_post(api, ori_screen):
 
     push_number = cursor_line
     # print(f'2>{push_number}<')
-    push_number = push_number[7:11]
+    push_number = push_number[7:10]
     # print(push_number)
     push_number = push_number.split(' ')
     # print(PushNumber)
